@@ -53,7 +53,7 @@ pipeline{
             steps{
 
                 script{
-                  nexusArtifactUploader artifacts: [[artifactId: 'springboot', classifier: '', file: 'target/Uber.jar', type: 'jar']], credentialsId: 'nexus-link', groupId: 'com.example', nexusUrl: '54.86.229.201:8081', nexusVersion: 'nexus3', protocol: 'http', repository: 'first-app', version: '1.0.1'  
+                  nexusArtifactUploader artifacts: [[artifactId: 'springboot', classifier: '', file: 'target/Uber.jar', type: 'jar']], credentialsId: 'nexus-link', groupId: 'com.example', nexusUrl: '54.86.229.201:8081', nexusVersion: 'nexus3', protocol: 'http', repository: 'first-app', version: '1.0.2'  
                 }
             }
         }
@@ -62,8 +62,7 @@ pipeline{
             steps{
 
                 script{
-                    deploy adapters: [tomcat9(credentialsId: 'tomcat-credential', path: '', url: 'http://44.211.43.0:8080')], contextPath: 'qaenv', war: '**/*.jar'
-                    sh 'wget --user-admin --password-admin http://54.86.229.201:8081/repository/first-app/com/example/springboot/1.0.1/springboot-1.0.1.jar'
+                    sh ' scp  /root/.jenkins/workspace/first-app/target/springboot-1.0.2.jar    ubuntu@172.31.88.58:/var/lib/tomcat8/webapps/prodenv.jar'
                 }
             }
         }
