@@ -57,5 +57,15 @@ pipeline{
                 }
             }
         }
+        stage('Deploy to Tomcat'){
+
+            steps{
+
+                script{
+                    deploy adapters: [tomcat9(credentialsId: 'tomcat-credential', path: '', url: 'http://44.211.43.0:8080')], contextPath: 'qaenv', war: '**/*.jar'
+                    sh 'wget --user-admin --password-admin http://54.86.229.201:8081/repository/first-app/com/example/springboot/1.0.0/springboot-1.0.0.jar'
+                }
+            }
+        }
     }
 }
